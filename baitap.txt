@@ -1,0 +1,137 @@
+bài 1 : 
+#include<stdlib.h>
+#include<stdio.h>
+void merge(int arr[], int l, int m, int r) //gộp hai mảng con arr[l...m] và arr[m+1..r]
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
+    int L[n1], R[n2];
+	// copy dữ liệu sang các mảng tạm
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1+ j];
+    i = 0; 
+    j = 0; 
+    k = l; 
+    while (i < n1 && j < n2) // tiến hành gộp mảng
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1) // nếu mảng l còn thì coppy vào arr
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2)// tương tự cái trên 
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+void mergeSort(int arr[], int l, int r) // l là chỉ số trái và r là chỉ số phải 
+{
+    if (l < r)
+    {
+        int m = l+(r-l)/2; // chánh tràn số ra khi l và r lớn 
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r); 
+        merge(arr, l, m, r);
+    }
+}
+void xuatmang(int arr[], int size){
+	int i;
+    for (i=0; i < size; i++){
+    	printf("%d",arr[i]);
+    	printf("\t");
+      }
+}
+int main (){
+	int n ;
+	printf("\n nhap phan tu mang \n");
+	scanf("%d",&n);
+	int a[n];
+	for(int i =0 ;i<n;i++){
+		printf("a[%d]=",i);
+		scanf("%d",&a[i]);
+	}
+	printf("\n mang chua sap xep la \n ");
+	xuatmang(a,n);
+	mergeSort(a,0,n);
+	printf("\n mang sau khi sap xep la \n ");
+	xuatmang(a,n);
+}
+bài 2 : 
+#include<stdio.h>
+#include<math.h>
+int a[20];
+bool namok(int x2,int y2){
+    //kiểm  tra cách đặt có thỏa mãn không
+    for(int i = 1; i < x2 ;i++)
+        if(a[i] == y2 || abs(i-x2) == abs(a[i] - y2) )
+            return false;
+    //kiểm  tra  các  trường  hợp  mà  không  sai thì  trả về đúng 
+    return true;
+}
+ 
+void Xuat(int n){
+    //in ra  kết quả
+    for(int i=1;i<=n;i++)
+        printf(" %d",a[i]);
+    printf("\n");
+}
+ 
+void hungok(int i,int n){
+    for(int j = 1;j<=n;j++){
+        // thử đặt quân hậu vào bàn cờ từ 1 đến n 
+        if(namok(i,j)){
+            //nếu hợp lý thì đặt lại 
+            a[i] = j;
+            // nếu đặt xong quân hậu thứ n thì xuất ra một kết quả  
+            if(i==n) Xuat(n);
+            hungok(i+1,n);
+        }
+    }
+}
+ 
+int main(){
+    int n = 8;//  xét trên bàn 8 nhân  8 
+    hungok(1,n);
+    return 0;
+}
+bài 3 : 
+#include <stdio.h>
+int main()
+{
+    int n;
+    printf("nhap n : ");
+    scanf("%d",&n);
+    int arr[n];
+    for(int i = 0; i < n; i++) {
+        scanf("%d",&arr[i]);
+    }
+    int min = arr[0], result = arr[1] - arr[0];
+    for(int i = 0; i < n; i++) {
+        if(arr[i] < min) {
+            min = arr[i];
+        }
+        if(arr[i] - min > result) {
+            result = arr[i] - min;
+        }
+    }
+    printf("%d",result);
+    return 0;
+}
